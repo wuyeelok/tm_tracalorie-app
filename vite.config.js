@@ -11,8 +11,6 @@ export default defineConfig({
       input: {
         404: resolve(__dirname, "src/404.html"),
         home: resolve(__dirname, "src/index.html"),
-        about: resolve(__dirname, "src/about/index.html"),
-        contact: resolve(__dirname, "src/contact/index.html"),
       },
     },
   },
