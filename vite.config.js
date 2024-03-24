@@ -3,7 +3,7 @@ import { defineConfig } from "vite";
 
 export default defineConfig({
   root: resolve(__dirname, "src/"),
-  base: "/beyond-css-website-starter-template-v2/",
+  base: "/tm_tracalorie-app/",
   build: {
     outDir: "../dist",
     emptyOutDir: true,
