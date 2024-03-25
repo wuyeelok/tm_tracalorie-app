@@ -101,3 +101,18 @@ class CalorieTracker {
     }
   }
 }
+
+const tracker = new CalorieTracker();
+
+const breakfast = new Meal("Breakfast", 400);
+tracker.addMeal(breakfast);
+
+const run = new Workout("Morning run", 300);
+tracker.addWorkout(run);
+console.log(tracker);
+
+tracker.removeMeal(breakfast.id);
+console.log(tracker);
+
+tracker.removeWorkout(run.id);
+console.log(tracker);
