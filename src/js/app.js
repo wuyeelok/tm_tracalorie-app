@@ -67,11 +67,15 @@ class CalorieTracker {
     this.#totalCalories = 0;
     this.#meals = [];
     this.#workouts = [];
+
+    this.#rendorStats();
   }
 
   addMeal(meal) {
     this.#meals.push(meal);
     this.#totalCalories += meal.calories;
+
+    this.#rendorStats();
   }
 
   removeMeal(id) {
@@ -83,11 +87,15 @@ class CalorieTracker {
         break;
       }
     }
+
+    this.#rendorStats();
   }
 
   addWorkout(workout) {
     this.#workouts.push(workout);
     this.#totalCalories -= workout.calories;
+
+    this.#rendorStats();
   }
 
   removeWorkout(id) {
@@ -99,20 +107,64 @@ class CalorieTracker {
         break;
       }
     }
+
+    this.#rendorStats();
+  }
+
+  #displayCalorieTotal() {
+    document.getElementById("calories-total").innerText = this.#totalCalories;
+  }
+
+  #displayCalorieLimit() {
+    document.getElementById("calories-limit").innerText = this.#calorieLimit;
+  }
+
+  #displayCaloriesConsumed() {
+    document.getElementById("calories-consumed").innerText = this.#meals
+      .map((m) => m.calories)
+      .reduce((p, c) => p + c, 0);
+  }
+
+  #displayCaloriesBurned() {
+    document.getElementById("calories-burned").innerText = this.#workouts
+      .map((m) => m.calories)
+      .reduce((p, c) => p + c, 0);
+  }
+
+  #displayCaloriesRemaining() {
+    document.getElementById("calories-remaining").innerText =
+      this.#calorieLimit -
+      this.#meals.map((m) => m.calories).reduce((p, c) => p + c, 0);
+  }
+
+  #rendorStats() {
+    this.#displayCalorieTotal();
+    this.#displayCalorieLimit();
+    this.#displayCaloriesConsumed();
+    this.#displayCaloriesBurned();
+    this.#displayCaloriesRemaining();
   }
 }
 
 const tracker = new CalorieTracker();
 
+const run = new Workout("Morning run", 300);
+tracker.addWorkout(run);
+
 const breakfast = new Meal("Breakfast", 400);
 tracker.addMeal(breakfast);
 
-const run = new Workout("Morning run", 300);
-tracker.addWorkout(run);
-console.log(tracker);
+const lunch = new Meal("lunch", 500);
+tracker.addMeal(lunch);
+
+const gym = new Workout("Gym", 200);
+tracker.addWorkout(gym);
+
+/* 
 
 tracker.removeMeal(breakfast.id);
 console.log(tracker);
 
 tracker.removeWorkout(run.id);
 console.log(tracker);
+ */
