@@ -56,8 +56,8 @@ class CalorieTracker {
   #meals;
   #workouts;
 
-  constructor(calorieLimit) {
-    this.#calorieLimit = calorieLimit;
+  constructor() {
+    this.#calorieLimit = 2000;
     this.#totalCalories = 0;
     this.#meals = [];
     this.#workouts = [];
