@@ -68,7 +68,11 @@ class CalorieTracker {
     this.#meals = [];
     this.#workouts = [];
 
-    this.#rendorStats();
+    this.#displayCalorieLimit();
+    this.#displayCalorieTotal();
+    this.#displayCaloriesConsumed();
+    this.#displayCaloriesBurned();
+    this.#displayCaloriesRemaining();
   }
 
   addMeal(meal) {
@@ -133,13 +137,11 @@ class CalorieTracker {
 
   #displayCaloriesRemaining() {
     document.getElementById("calories-remaining").innerText =
-      this.#calorieLimit -
-      this.#meals.map((m) => m.calories).reduce((p, c) => p + c, 0);
+      this.#calorieLimit - this.#totalCalories;
   }
 
   #rendorStats() {
     this.#displayCalorieTotal();
-    this.#displayCalorieLimit();
     this.#displayCaloriesConsumed();
     this.#displayCaloriesBurned();
     this.#displayCaloriesRemaining();
@@ -148,23 +150,8 @@ class CalorieTracker {
 
 const tracker = new CalorieTracker();
 
-const run = new Workout("Morning run", 300);
+const run = new Workout("Morning run", 320);
 tracker.addWorkout(run);
 
 const breakfast = new Meal("Breakfast", 400);
 tracker.addMeal(breakfast);
-
-const lunch = new Meal("lunch", 500);
-tracker.addMeal(lunch);
-
-const gym = new Workout("Gym", 200);
-tracker.addWorkout(gym);
-
-/* 
-
-tracker.removeMeal(breakfast.id);
-console.log(tracker);
-
-tracker.removeWorkout(run.id);
-console.log(tracker);
- */
