@@ -1,5 +1,3 @@
-const { c } = require("vite/dist/node/types.d-aGj9QkWt");
-
 console.log("Tracalorie!");
 
 class Meal {
@@ -7,8 +5,8 @@ class Meal {
   #name;
   #calories;
 
-  constructor(id, name, calories) {
-    this.#id = id;
+  constructor(name, calories) {
+    this.#id = this.#generateId();
     this.#name = name;
     this.#calories = calories;
   }
@@ -23,6 +21,10 @@ class Meal {
 
   get calories() {
     return this.#calories;
+  }
+
+  #generateId() {
+    return `${Math.random().toString(16).slice(2)}${new Date().getTime()}`;
   }
 }
 
@@ -31,8 +33,8 @@ class Workout {
   #name;
   #calories;
 
-  constructor(id, name, calories) {
-    this.#id = id;
+  constructor(name, calories) {
+    this.#id = this.#generateId();
     this.#name = name;
     this.#calories = calories;
   }
@@ -47,6 +49,10 @@ class Workout {
 
   get calories() {
     return this.#calories;
+  }
+
+  #generateId() {
+    return `${Math.random().toString(16).slice(2)}${new Date().getTime()}`;
   }
 }
 
@@ -63,29 +69,35 @@ class CalorieTracker {
     this.#workouts = [];
   }
 
-  addMeal(name, calories) {
-    const id = this.#meals.length;
-    const meal = new Meal(id, name, calories);
+  addMeal(meal) {
     this.#meals.push(meal);
-    this.#totalCalories += calories;
+    this.#totalCalories += meal.calories;
   }
 
   removeMeal(id) {
-    const meal = this.#meals[id];
-    this.#meals.splice(id, 1);
-    this.#totalCalories -= meal.calories;
+    for (let i = 0; i < this.#meals.length; i++) {
+      const meal = this.#meals[i];
+      if (meal.id === id) {
+        this.#meals.splice(i, 1);
+        this.#totalCalories -= meal.calories;
+        break;
+      }
+    }
   }
 
-  addWorkout(name, calories) {
-    const id = this.#workouts.length;
-    const workout = new Workout(id, name, calories);
+  addWorkout(workout) {
     this.#workouts.push(workout);
-    this.#totalCalories -= calories;
+    this.#totalCalories -= workout.calories;
   }
 
   removeWorkout(id) {
-    const workout = this.#workouts.length;
-    this.#workouts.splice(id, 1);
-    this.#totalCalories += workout.calories;
+    for (let i = 0; i < this.#workouts.length; i++) {
+      const workout = this.#workouts[i];
+      if (workout.id === id) {
+        this.#workouts.splice(i, 1);
+        this.#totalCalories += workout.calories;
+        break;
+      }
+    }
   }
 }
