@@ -137,15 +137,21 @@ class CalorieTracker {
   }
 
   #displayCaloriesRemaining() {
-    const caloriesRemaining = this.#calorieLimit - this.#totalCalories;
-    const calRemainEle = document.getElementById("calories-remaining");
-    calRemainEle.innerText = caloriesRemaining;
-    if (caloriesRemaining < 0) {
-      calRemainEle.parentElement.parentElement.classList.remove("bg-light");
-      calRemainEle.parentElement.parentElement.classList.add("bg-danger");
+    const remaining = this.#calorieLimit - this.#totalCalories;
+    const caloriesRemainingEl = document.getElementById("calories-remaining");
+    caloriesRemainingEl.innerText = remaining;
+    if (remaining < 0) {
+      caloriesRemainingEl.parentElement.parentElement.classList.remove(
+        "bg-light"
+      );
+      caloriesRemainingEl.parentElement.parentElement.classList.add(
+        "bg-danger"
+      );
     } else {
-      calRemainEle.parentElement.parentElement.classList.add("bg-light");
-      calRemainEle.parentElement.parentElement.classList.remove("bg-danger");
+      caloriesRemainingEl.parentElement.parentElement.classList.add("bg-light");
+      caloriesRemainingEl.parentElement.parentElement.classList.remove(
+        "bg-danger"
+      );
     }
   }
 
