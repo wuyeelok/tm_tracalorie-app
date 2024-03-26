@@ -73,7 +73,7 @@ class CalorieTracker {
     this.#displayCaloriesConsumed();
     this.#displayCaloriesBurned();
     this.#displayCaloriesRemaining();
-    this.#displayProgressBar();
+    this.#displayCaloriesProgress();
   }
 
   addMeal(meal) {
@@ -149,20 +149,20 @@ class CalorieTracker {
     }
   }
 
-  #displayProgressBar() {
-    const progressEle = document.getElementById("calorie-progress");
+  #displayCaloriesProgress() {
+    const progressEl = document.getElementById("calorie-progress");
 
     let progress = 0;
 
     if (this.#totalCalories <= this.#calorieLimit) {
       progress = Math.round((this.#totalCalories / this.#calorieLimit) * 100);
-      progressEle.classList.remove("bg-danger");
+      progressEl.classList.remove("bg-danger");
     } else {
       progress = 100;
-      progressEle.classList.add("bg-danger");
+      progressEl.classList.add("bg-danger");
     }
 
-    progressEle.style.width = `${progress}%`;
+    progressEl.style.width = `${progress}%`;
   }
 
   #rendorStats() {
@@ -170,7 +170,7 @@ class CalorieTracker {
     this.#displayCaloriesConsumed();
     this.#displayCaloriesBurned();
     this.#displayCaloriesRemaining();
-    this.#displayProgressBar();
+    this.#displayCaloriesProgress();
   }
 }
 
