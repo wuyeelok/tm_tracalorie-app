@@ -180,7 +180,7 @@ class CalorieTracker {
   }
 }
 
-const tracker = new CalorieTracker();
+/* const tracker = new CalorieTracker();
 
 const run = new Workout("Morning run", 320);
 tracker.addWorkout(run);
@@ -189,4 +189,47 @@ const breakfast = new Meal("Breakfast", 400);
 tracker.addMeal(breakfast);
 
 const superSize = new Meal("Super Size", 1920);
-tracker.addMeal(superSize);
+tracker.addMeal(superSize); */
+
+class App {
+  #tracker;
+
+  constructor() {
+    this.#tracker = new CalorieTracker();
+
+    document
+      .getElementById("meal-form")
+      .addEventListener("submit", this.#newMeal.bind(this));
+  }
+
+  #newMeal(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("meal-name");
+    const calories = document.getElementById("meal-calories");
+
+    // validate inputs
+    if (name.value.trim() === "" || calories.value === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const meal = new Meal(name.value.trim(), Number(calories.value));
+    this.#tracker.addMeal(meal);
+
+    name.value = "";
+    calories.value = "";
+  }
+
+  #newItem() {}
+
+  #removeItem() {}
+
+  #filterItems() {}
+
+  #reset() {}
+
+  #setLimit() {}
+}
+
+const app = new App();
