@@ -200,28 +200,20 @@ class App {
   constructor() {
     this.#tracker = new CalorieTracker();
 
-    document
-      .getElementById("meal-form")
-      .addEventListener("submit", this.#newMeal.bind(this));
+    document.getElementById("meal-form").addEventListener("submit", (event) => {
+      this.#newItem(event, "meal");
+    });
 
     document
       .getElementById("workout-form")
-      .addEventListener("submit", this.#newWorkout.bind(this));
+      .addEventListener("submit", (event) => {
+        this.#newItem(event, "workout");
+      });
   }
 
-  #newMeal(e) {
+  #newItem(e, type) {
     e.preventDefault();
 
-    this.#newItem("meal");
-  }
-
-  #newWorkout(e) {
-    e.preventDefault();
-
-    this.#newItem("workout");
-  }
-
-  #newItem(type) {
     const name = document.getElementById(`${type}-name`);
     const calories = document.getElementById(`${type}-calories`);
 
@@ -242,7 +234,7 @@ class App {
     name.value = "";
     calories.value = "";
 
-    const collpaseEls = document.getElementById(`collapse-${type}`);
+    const collpaseEl = document.getElementById(`collapse-${type}`);
     const bsCollapse = new bootstrap.Collapse(collpaseEl, {
       toggle: true,
     });
