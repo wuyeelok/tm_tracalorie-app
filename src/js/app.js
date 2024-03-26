@@ -225,7 +225,9 @@ class App {
     calories.value = "";
 
     const collapseMeal = document.getElementById("collapse-meal");
-    collapseMeal.classList.remove("show");
+    const bsCollapse = new bootstrap.Collapse(collapseMeal, {
+      toggle: true,
+    });
   }
 
   #newWorkout(e) {
@@ -247,7 +249,9 @@ class App {
     calories.value = "";
 
     const collpaseWorkout = document.getElementById("collapse-workout");
-    collpaseWorkout.classList.remove("show");
+    const bsCollapse = new bootstrap.Collapse(collpaseWorkout, {
+      toggle: true,
+    });
   }
 
   #newItem() {}
