@@ -180,7 +180,7 @@ class CalorieTracker {
   }
 }
 
-const tracker = new CalorieTracker();
+/* const tracker = new CalorieTracker();
 
 const run = new Workout("Morning run", 320);
 tracker.addWorkout(run);
@@ -189,4 +189,80 @@ const breakfast = new Meal("Breakfast", 400);
 tracker.addMeal(breakfast);
 
 const superSize = new Meal("Super Size", 1920);
-tracker.addMeal(superSize);
+tracker.addMeal(superSize); */
+
+class App {
+  #tracker;
+
+  constructor() {
+    this.#tracker = new CalorieTracker();
+
+    document
+      .getElementById("meal-form")
+      .addEventListener("submit", this.#newMeal.bind(this));
+
+    document
+      .getElementById("workout-form")
+      .addEventListener("submit", this.#newWorkout.bind(this));
+  }
+
+  #newMeal(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("meal-name");
+    const calories = document.getElementById("meal-calories");
+
+    // validate inputs
+    if (name.value.trim() === "" || calories.value === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const meal = new Meal(name.value.trim(), Number(calories.value));
+    this.#tracker.addMeal(meal);
+
+    name.value = "";
+    calories.value = "";
+
+    const collapseMeal = document.getElementById("collapse-meal");
+    const bsCollapse = new bootstrap.Collapse(collapseMeal, {
+      toggle: true,
+    });
+  }
+
+  #newWorkout(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("workout-name");
+    const calories = document.getElementById("workout-calories");
+
+    // validate inputs
+    if (name.value.trim() === "" || calories.value === "") {
+      alert("Please fill in all fields");
+      return;
+    }
+
+    const workout = new Workout(name.value.trim(), Number(calories.value));
+    this.#tracker.addWorkout(workout);
+
+    name.value = "";
+    calories.value = "";
+
+    const collpaseWorkout = document.getElementById("collapse-workout");
+    const bsCollapse = new bootstrap.Collapse(collpaseWorkout, {
+      toggle: true,
+    });
+  }
+
+  #newItem() {}
+
+  #removeItem() {}
+
+  #filterItems() {}
+
+  #reset() {}
+
+  #setLimit() {}
+}
+
+const app = new App();
