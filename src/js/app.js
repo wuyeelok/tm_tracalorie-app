@@ -234,8 +234,8 @@ class App {
     name.value = "";
     calories.value = "";
 
-    const collpaseEl = document.getElementById(`collapse-${type}`);
-    const bsCollapse = new bootstrap.Collapse(collpaseEl, {
+    const collpaseItem = document.getElementById(`collapse-${type}`);
+    const bsCollapse = new bootstrap.Collapse(collpaseItem, {
       toggle: true,
     });
   }
