@@ -223,6 +223,9 @@ class App {
 
     name.value = "";
     calories.value = "";
+
+    const collapseMeal = document.getElementById("collapse-meal");
+    collapseMeal.classList.remove("show");
   }
 
   #newWorkout(e) {
@@ -242,6 +245,9 @@ class App {
 
     name.value = "";
     calories.value = "";
+
+    const collpaseWorkout = document.getElementById("collapse-workout");
+    collpaseWorkout.classList.remove("show");
   }
 
   #newItem() {}
