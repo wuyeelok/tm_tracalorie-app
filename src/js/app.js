@@ -140,7 +140,7 @@ class CalorieTracker {
     const remaining = this.#calorieLimit - this.#totalCalories;
     const caloriesRemainingEl = document.getElementById("calories-remaining");
     caloriesRemainingEl.innerText = remaining;
-    if (remaining < 0) {
+    if (remaining <= 0) {
       caloriesRemainingEl.parentElement.parentElement.classList.remove(
         "bg-light"
       );
@@ -160,7 +160,7 @@ class CalorieTracker {
 
     let percentage = 0;
 
-    if (this.#totalCalories <= this.#calorieLimit) {
+    if (this.#totalCalories < this.#calorieLimit) {
       percentage = Math.round((this.#totalCalories / this.#calorieLimit) * 100);
       progressEl.classList.remove("bg-danger");
     } else {
@@ -188,5 +188,5 @@ tracker.addWorkout(run);
 const breakfast = new Meal("Breakfast", 400);
 tracker.addMeal(breakfast);
 
-const superSize = new Meal("Super Size", 3000);
+const superSize = new Meal("Super Size", 1920);
 tracker.addMeal(superSize);
