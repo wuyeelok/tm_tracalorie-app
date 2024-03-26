@@ -152,17 +152,17 @@ class CalorieTracker {
   #displayCaloriesProgress() {
     const progressEl = document.getElementById("calorie-progress");
 
-    let progress = 0;
+    let percentage = 0;
 
     if (this.#totalCalories <= this.#calorieLimit) {
-      progress = Math.round((this.#totalCalories / this.#calorieLimit) * 100);
+      percentage = Math.round((this.#totalCalories / this.#calorieLimit) * 100);
       progressEl.classList.remove("bg-danger");
     } else {
-      progress = 100;
+      percentage = 100;
       progressEl.classList.add("bg-danger");
     }
 
-    progressEl.style.width = `${progress}%`;
+    progressEl.style.width = `${percentage}%`;
   }
 
   #rendorStats() {
