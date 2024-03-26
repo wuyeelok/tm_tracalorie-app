@@ -73,6 +73,7 @@ class CalorieTracker {
     this.#displayCaloriesConsumed();
     this.#displayCaloriesBurned();
     this.#displayCaloriesRemaining();
+    this.#displayCaloriesProgress();
   }
 
   addMeal(meal) {
@@ -136,8 +137,38 @@ class CalorieTracker {
   }
 
   #displayCaloriesRemaining() {
-    document.getElementById("calories-remaining").innerText =
-      this.#calorieLimit - this.#totalCalories;
+    const remaining = this.#calorieLimit - this.#totalCalories;
+    const caloriesRemainingEl = document.getElementById("calories-remaining");
+    caloriesRemainingEl.innerText = remaining;
+    if (remaining <= 0) {
+      caloriesRemainingEl.parentElement.parentElement.classList.remove(
+        "bg-light"
+      );
+      caloriesRemainingEl.parentElement.parentElement.classList.add(
+        "bg-danger"
+      );
+    } else {
+      caloriesRemainingEl.parentElement.parentElement.classList.add("bg-light");
+      caloriesRemainingEl.parentElement.parentElement.classList.remove(
+        "bg-danger"
+      );
+    }
+  }
+
+  #displayCaloriesProgress() {
+    const progressEl = document.getElementById("calorie-progress");
+
+    let percentage = 0;
+
+    if (this.#totalCalories < this.#calorieLimit) {
+      percentage = Math.round((this.#totalCalories / this.#calorieLimit) * 100);
+      progressEl.classList.remove("bg-danger");
+    } else {
+      percentage = 100;
+      progressEl.classList.add("bg-danger");
+    }
+
+    progressEl.style.width = `${percentage}%`;
   }
 
   #rendorStats() {
@@ -145,6 +176,7 @@ class CalorieTracker {
     this.#displayCaloriesConsumed();
     this.#displayCaloriesBurned();
     this.#displayCaloriesRemaining();
+    this.#displayCaloriesProgress();
   }
 }
 
@@ -155,3 +187,6 @@ tracker.addWorkout(run);
 
 const breakfast = new Meal("Breakfast", 400);
 tracker.addMeal(breakfast);
+
+const superSize = new Meal("Super Size", 1920);
+tracker.addMeal(superSize);
