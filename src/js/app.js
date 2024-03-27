@@ -128,8 +128,8 @@ class CalorieTracker {
     this.#rendorStats();
   }
 
-  setLimit(limit) {
-    this.#calorieLimit = limit;
+  setLimit(calorieLimit) {
+    this.#calorieLimit = calorieLimit;
 
     this.#displayCalorieLimit();
     this.#rendorStats();
