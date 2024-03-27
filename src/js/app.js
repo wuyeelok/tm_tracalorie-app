@@ -121,6 +121,13 @@ class CalorieTracker {
     }
   }
 
+  resetDay() {
+    this.#totalCalories = 0;
+    this.#meals = [];
+    this.#workouts = [];
+    this.#rendorStats();
+  }
+
   loadItems(type, input) {
     if (type === "meal") {
       let searchResults;
@@ -390,7 +397,7 @@ class App {
   }
 
   #reset() {
-    this.#tracker = new CalorieTracker();
+    this.#tracker.resetDay();
 
     const mealItems = document.getElementById("meal-items");
     mealItems.innerHTML = "";
