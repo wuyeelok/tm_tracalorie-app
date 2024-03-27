@@ -18,6 +18,10 @@ class Meal {
     return this.#id;
   }
 
+  set id(id) {
+    this.#id = id;
+  }
+
   get name() {
     return this.#name;
   }
@@ -28,6 +32,29 @@ class Meal {
 
   #generateId() {
     return `${Math.random().toString(16).slice(2)}${new Date().getTime()}`;
+  }
+
+  /* stringify() {
+    return JSON.stringify({
+      id: this.#id,
+      name: this.#name,
+      calories: this.#calories,
+    });
+  }
+ */
+  static convert(mealObj) {
+    const meal = new Meal(mealObj.name, mealObj.calories);
+    meal.id = mealObj.id;
+    return meal;
+  }
+
+  getNormalObj() {
+    const meal = {
+      id: this.#id,
+      name: this.#name,
+      calories: this.#calories,
+    };
+    return meal;
   }
 }
 
@@ -68,7 +95,7 @@ class CalorieTracker {
   constructor() {
     this.#calorieLimit = Storage.getCalorieLimit();
     this.#totalCalories = Storage.getTotalCalories(0);
-    this.#meals = [];
+    this.#meals = Storage.getMeals();
     this.#workouts = [];
 
     this.#displayCalorieLimit();
@@ -81,6 +108,8 @@ class CalorieTracker {
 
   addMeal(meal) {
     this.#meals.push(meal);
+    Storage.saveMeals(this.#meals);
+
     this.#totalCalories += meal.calories;
     Storage.setTotalCalories(this.#totalCalories);
 
@@ -141,40 +170,8 @@ class CalorieTracker {
     this.#rendorStats();
   }
 
-  loadItems(type, input) {
-    if (type === "meal") {
-      let searchResults;
-      if (input) {
-        searchResults = this.#meals.filter((m) =>
-          m.name.toLowerCase().includes(input.toLowerCase())
-        );
-      } else {
-        searchResults = this.#meals;
-      }
-
-      const mealItems = document.getElementById("meal-items");
-      mealItems.innerHTML = "";
-
-      for (const meal of searchResults) {
-        this.#displayNewMeal(meal);
-      }
-    } else if (type === "workout") {
-      let searchResults;
-      if (input) {
-        searchResults = this.#workouts.filter((m) =>
-          m.name.toLowerCase().includes(input.toLowerCase())
-        );
-      } else {
-        searchResults = this.#workouts;
-      }
-
-      const workoutItems = document.getElementById("workout-items");
-      workoutItems.innerHTML = "";
-
-      for (const meal of searchResults) {
-        this.#displayNewWorkout(meal);
-      }
-    }
+  loadItems() {
+    this.#meals.forEach((meal) => this.#displayNewMeal(meal));
   }
 
   #displayCalorieTotal() {
@@ -325,6 +322,21 @@ class Storage {
   static setTotalCalories(total) {
     localStorage.setItem("totalCalories", total);
   }
+
+  static saveMeals(meals) {
+    const mealObjArr = meals.map((meal) => meal.getNormalObj());
+    localStorage.setItem("meals", JSON.stringify(mealObjArr));
+  }
+
+  static getMeals() {
+    const mealObjArr =
+      localStorage.getItem("meals") !== null
+        ? JSON.parse(localStorage.getItem("meals"))
+        : [];
+
+    const meals = mealObjArr.map((mealObj) => Meal.convert(mealObj));
+    return meals;
+  }
 }
 
 class App {
@@ -370,6 +382,8 @@ class App {
     document
       .getElementById("limit-form")
       .addEventListener("submit", this.#setLimit.bind(this));
+
+    this.#tracker.loadItems();
   }
 
   #newItem(e, type) {
