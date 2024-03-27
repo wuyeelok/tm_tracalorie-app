@@ -369,9 +369,20 @@ class App {
   }
 
   #filterItems(type, e) {
-    const text = e.target.value.toLowerCase.trim();
+    const text = e.target.value.toLowerCase().trim();
+    const items = document.querySelectorAll(`#${type}-items .card`);
+    items.forEach((item) => {
+      const name =
+        item.firstElementChild.firstElementChild.firstElementChild.innerText.trim();
 
-    this.#tracker.loadItems(type, text);
+      if (name.toLowerCase().includes(text)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+
+    // this.#tracker.loadItems(type, text);
   }
 
   #reset() {}
