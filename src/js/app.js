@@ -369,9 +369,9 @@ class App {
   }
 
   #filterItems(type, e) {
-    const input = e.target.value.trim();
+    const text = e.target.value.toLowerCase.trim();
 
-    this.#tracker.loadItems(type, input);
+    this.#tracker.loadItems(type, text);
   }
 
   #reset() {}
