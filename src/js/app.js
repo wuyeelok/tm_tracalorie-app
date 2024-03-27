@@ -435,7 +435,7 @@ class App {
       return;
     }
 
-    this.#tracker.setLimit(limit);
+    this.#tracker.setLimit(Number(limit));
 
     limitEl.value = "";
     limitModal.hide();
