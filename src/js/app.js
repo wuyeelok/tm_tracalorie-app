@@ -83,8 +83,8 @@ class CalorieTracker {
     this.#meals.push(meal);
     this.#totalCalories += meal.calories;
 
-    this.#rendorStats();
     this.#displayNewMeal(meal);
+    this.#rendorStats();
   }
 
   removeMeal(id) {
@@ -104,8 +104,8 @@ class CalorieTracker {
     this.#workouts.push(workout);
     this.#totalCalories -= workout.calories;
 
-    this.#rendorStats();
     this.#displayWorkout(workout);
+    this.#rendorStats();
   }
 
   removeWorkout(id) {
