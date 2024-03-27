@@ -128,6 +128,13 @@ class CalorieTracker {
     this.#rendorStats();
   }
 
+  setLimit(limit) {
+    this.#calorieLimit = limit;
+
+    this.#displayCalorieLimit();
+    this.#rendorStats();
+  }
+
   loadItems(type, input) {
     if (type === "meal") {
       let searchResults;
@@ -331,6 +338,10 @@ class App {
     document
       .getElementById("reset")
       .addEventListener("click", this.#reset.bind(this));
+
+    document
+      .getElementById("limit-form")
+      .addEventListener("submit", this.#setLimit.bind(this));
   }
 
   #newItem(e, type) {
@@ -412,7 +423,23 @@ class App {
     filterWorkouts.value = "";
   }
 
-  #setLimit() {}
+  #setLimit(evt) {
+    evt.preventDefault();
+
+    const limitModal = bootstrap.Modal.getInstance("#limit-modal");
+    const limitEl = document.getElementById("limit");
+    const limit = limitEl.value;
+
+    if (!limit || isNaN(limit) || limit <= 0) {
+      alert("Please input a valid limit");
+      return;
+    }
+
+    this.#tracker.setLimit(limit);
+
+    limitEl.value = "";
+    limitModal.hide();
+  }
 }
 
 const app = new App();
