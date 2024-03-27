@@ -431,7 +431,7 @@ class App {
     const limit = limitEl.value;
 
     if (!limit || isNaN(limit) || limit <= 0) {
-      alert("Please input a valid limit");
+      alert("Please add a valid limit");
       return;
     }
 
