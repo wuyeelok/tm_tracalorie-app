@@ -181,6 +181,7 @@ class CalorieTracker {
 
     const mealEl = document.createElement("div");
     mealEl.classList.add("card", "my-2");
+    mealEl.setAttribute("data-id", meal.id);
     mealEl.innerHTML = `
     <div class="card-body">
       <div class="d-flex align-items-center justify-content-between">
@@ -205,6 +206,7 @@ class CalorieTracker {
 
     const workoutEl = document.createElement("div");
     workoutEl.classList.add("card", "my-2");
+    workoutEl.setAttribute("data-id", workout.id);
     workoutEl.innerHTML = `
     <div class="card-body">
       <div class="d-flex align-items-center justify-content-between">
