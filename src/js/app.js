@@ -104,7 +104,7 @@ class CalorieTracker {
     this.#workouts.push(workout);
     this.#totalCalories -= workout.calories;
 
-    this.#displayWorkout(workout);
+    this.#displayNewWorkout(workout);
     this.#rendorStats();
   }
 
@@ -118,6 +118,42 @@ class CalorieTracker {
       const workoutEl = document.querySelector(`[data-id="${id}"]`);
       workoutEl.remove();
       this.#rendorStats();
+    }
+  }
+
+  loadItems(type, input) {
+    if (type === "meal") {
+      let searchResults;
+      if (input) {
+        searchResults = this.#meals.filter((m) =>
+          m.name.toLowerCase().includes(input.toLowerCase())
+        );
+      } else {
+        searchResults = this.#meals;
+      }
+
+      const mealItems = document.getElementById("meal-items");
+      mealItems.innerHTML = "";
+
+      for (const meal of searchResults) {
+        this.#displayNewMeal(meal);
+      }
+    } else if (type === "workout") {
+      let searchResults;
+      if (input) {
+        searchResults = this.#workouts.filter((m) =>
+          m.name.toLowerCase().includes(input.toLowerCase())
+        );
+      } else {
+        searchResults = this.#workouts;
+      }
+
+      const workoutItems = document.getElementById("workout-items");
+      workoutItems.innerHTML = "";
+
+      for (const meal of searchResults) {
+        this.#displayNewWorkout(meal);
+      }
     }
   }
 
@@ -204,7 +240,7 @@ class CalorieTracker {
     mealItems.appendChild(mealEl);
   }
 
-  #displayWorkout(workout) {
+  #displayNewWorkout(workout) {
     const workoutItems = document.getElementById("workout-items");
 
     const workoutEl = document.createElement("div");
@@ -274,6 +310,16 @@ class App {
       .addEventListener("click", (evt) => {
         this.#removeItem(evt, "workout");
       });
+
+    document.getElementById("filter-meals").addEventListener("input", (evt) => {
+      this.#filterItems("meal", evt);
+    });
+
+    document
+      .getElementById("filter-workouts")
+      .addEventListener("input", (evt) => {
+        this.#filterItems("workout", evt);
+      });
   }
 
   #newItem(e, type) {
@@ -322,7 +368,11 @@ class App {
     }
   }
 
-  #filterItems() {}
+  #filterItems(type, e) {
+    const input = e.target.value.trim();
+
+    this.#tracker.loadItems(type, input);
+  }
 
   #reset() {}
 
