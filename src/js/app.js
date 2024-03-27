@@ -426,7 +426,7 @@ class App {
   #setLimit(evt) {
     evt.preventDefault();
 
-    const limitModal = bootstrap.Modal.getInstance("#limit-modal");
+    const modal = bootstrap.Modal.getInstance("#limit-modal");
     const limit = document.getElementById("limit");
 
     if (limit.value === "" || isNaN(limit.value) || Number(limit.value) <= 0) {
@@ -437,7 +437,7 @@ class App {
     this.#tracker.setLimit(Number(limit.value));
 
     limit.value = "";
-    limitModal.hide();
+    modal.hide();
   }
 }
 
