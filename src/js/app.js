@@ -427,17 +427,16 @@ class App {
     evt.preventDefault();
 
     const limitModal = bootstrap.Modal.getInstance("#limit-modal");
-    const limitEl = document.getElementById("limit");
-    const limit = limitEl.value;
+    const limit = document.getElementById("limit");
 
-    if (!limit || isNaN(limit) || limit <= 0) {
+    if (limit.value === "" || isNaN(limit.value) || Number(limit.value) <= 0) {
       alert("Please add a valid limit");
       return;
     }
 
-    this.#tracker.setLimit(Number(limit));
+    this.#tracker.setLimit(Number(limit.value));
 
-    limitEl.value = "";
+    limit.value = "";
     limitModal.hide();
   }
 }
