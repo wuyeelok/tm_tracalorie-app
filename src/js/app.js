@@ -320,6 +320,10 @@ class App {
       .addEventListener("input", (evt) => {
         this.#filterItems("workout", evt);
       });
+
+    document
+      .getElementById("reset")
+      .addEventListener("click", this.#reset.bind(this));
   }
 
   #newItem(e, type) {
@@ -385,7 +389,21 @@ class App {
     // this.#tracker.loadItems(type, text);
   }
 
-  #reset() {}
+  #reset() {
+    this.#tracker = new CalorieTracker();
+
+    const mealItems = document.getElementById("meal-items");
+    mealItems.innerHTML = "";
+
+    const workoutItems = document.getElementById("workout-items");
+    workoutItems.innerHTML = "";
+
+    const filterMeals = document.getElementById("filter-meals");
+    filterMeals.value = "";
+
+    const filterWorkouts = document.getElementById("filter-workouts");
+    filterWorkouts.value = "";
+  }
 
   #setLimit() {}
 }
