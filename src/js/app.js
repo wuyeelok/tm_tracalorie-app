@@ -97,6 +97,8 @@ class CalorieTracker {
       }
     }
 
+    const mealEl = document.querySelector(`[data-id="${id}"]`);
+    mealEl.remove();
     this.#rendorStats();
   }
 
@@ -118,6 +120,8 @@ class CalorieTracker {
       }
     }
 
+    const workoutEl = document.querySelector(`[data-id="${id}"]`);
+    workoutEl.remove();
     this.#rendorStats();
   }
 
@@ -166,7 +170,10 @@ class CalorieTracker {
     let percentage = 0;
 
     if (this.#totalCalories < this.#calorieLimit) {
-      percentage = Math.round((this.#totalCalories / this.#calorieLimit) * 100);
+      percentage = Math.max(
+        0,
+        Math.round((this.#totalCalories / this.#calorieLimit) * 100)
+      );
       progressEl.classList.remove("bg-danger");
     } else {
       percentage = 100;
@@ -261,6 +268,16 @@ class App {
       .addEventListener("submit", (event) => {
         this.#newItem(event, "workout");
       });
+
+    document.getElementById("meal-items").addEventListener("click", (evt) => {
+      this.#removeItem(evt, "meal");
+    });
+
+    document
+      .getElementById("workout-items")
+      .addEventListener("click", (evt) => {
+        this.#removeItem(evt, "workout");
+      });
   }
 
   #newItem(e, type) {
@@ -292,7 +309,22 @@ class App {
     });
   }
 
-  #removeItem() {}
+  #removeItem(e, type) {
+    if (
+      e.target.classList.contains("delete") ||
+      e.target.parentElement.classList.contains("delete")
+    ) {
+      if (confirm("Are you sure?")) {
+        const id = e.target.closest(".card").dataset.id;
+
+        if (type === "meal") {
+          this.#tracker.removeMeal(id);
+        } else if (type === "workout") {
+          this.#tracker.removeWorkout(id);
+        }
+      }
+    }
+  }
 
   #filterItems() {}
 
