@@ -67,7 +67,7 @@ class CalorieTracker {
 
   constructor() {
     this.#calorieLimit = Storage.getCalorieLimit();
-    this.#totalCalories = Storage.getTotalCalories();
+    this.#totalCalories = Storage.getTotalCalories(0);
     this.#meals = [];
     this.#workouts = [];
 
@@ -316,10 +316,10 @@ class Storage {
     localStorage.setItem("calorieLimit", limit);
   }
 
-  static getTotalCalories() {
+  static getTotalCalories(defaultTotal = 0) {
     return localStorage.getItem("totalCalories") !== null
       ? Number(localStorage.getItem("totalCalories"))
-      : 0;
+      : defaultTotal;
   }
 
   static setTotalCalories(total) {
