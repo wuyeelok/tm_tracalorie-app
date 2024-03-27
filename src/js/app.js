@@ -104,7 +104,7 @@ class CalorieTracker {
     this.#workouts.push(workout);
     this.#totalCalories -= workout.calories;
 
-    this.#displayWorkout(workout);
+    this.#displayNewWorkout(workout);
     this.#rendorStats();
   }
 
@@ -118,6 +118,49 @@ class CalorieTracker {
       const workoutEl = document.querySelector(`[data-id="${id}"]`);
       workoutEl.remove();
       this.#rendorStats();
+    }
+  }
+
+  resetDay() {
+    this.#totalCalories = 0;
+    this.#meals = [];
+    this.#workouts = [];
+    this.#rendorStats();
+  }
+
+  loadItems(type, input) {
+    if (type === "meal") {
+      let searchResults;
+      if (input) {
+        searchResults = this.#meals.filter((m) =>
+          m.name.toLowerCase().includes(input.toLowerCase())
+        );
+      } else {
+        searchResults = this.#meals;
+      }
+
+      const mealItems = document.getElementById("meal-items");
+      mealItems.innerHTML = "";
+
+      for (const meal of searchResults) {
+        this.#displayNewMeal(meal);
+      }
+    } else if (type === "workout") {
+      let searchResults;
+      if (input) {
+        searchResults = this.#workouts.filter((m) =>
+          m.name.toLowerCase().includes(input.toLowerCase())
+        );
+      } else {
+        searchResults = this.#workouts;
+      }
+
+      const workoutItems = document.getElementById("workout-items");
+      workoutItems.innerHTML = "";
+
+      for (const meal of searchResults) {
+        this.#displayNewWorkout(meal);
+      }
     }
   }
 
@@ -204,7 +247,7 @@ class CalorieTracker {
     mealItems.appendChild(mealEl);
   }
 
-  #displayWorkout(workout) {
+  #displayNewWorkout(workout) {
     const workoutItems = document.getElementById("workout-items");
 
     const workoutEl = document.createElement("div");
@@ -274,6 +317,20 @@ class App {
       .addEventListener("click", (evt) => {
         this.#removeItem(evt, "workout");
       });
+
+    document.getElementById("filter-meals").addEventListener("input", (evt) => {
+      this.#filterItems("meal", evt);
+    });
+
+    document
+      .getElementById("filter-workouts")
+      .addEventListener("input", (evt) => {
+        this.#filterItems("workout", evt);
+      });
+
+    document
+      .getElementById("reset")
+      .addEventListener("click", this.#reset.bind(this));
   }
 
   #newItem(e, type) {
@@ -322,9 +379,38 @@ class App {
     }
   }
 
-  #filterItems() {}
+  #filterItems(type, e) {
+    const text = e.target.value.toLowerCase().trim();
+    const items = document.querySelectorAll(`#${type}-items .card`);
+    items.forEach((item) => {
+      const name =
+        item.firstElementChild.firstElementChild.firstElementChild.innerText.trim();
 
-  #reset() {}
+      if (name.toLowerCase().includes(text)) {
+        item.style.display = "block";
+      } else {
+        item.style.display = "none";
+      }
+    });
+
+    // this.#tracker.loadItems(type, text);
+  }
+
+  #reset() {
+    this.#tracker.resetDay();
+
+    const mealItems = document.getElementById("meal-items");
+    mealItems.innerHTML = "";
+
+    const workoutItems = document.getElementById("workout-items");
+    workoutItems.innerHTML = "";
+
+    const filterMeals = document.getElementById("filter-meals");
+    filterMeals.value = "";
+
+    const filterWorkouts = document.getElementById("filter-workouts");
+    filterWorkouts.value = "";
+  }
 
   #setLimit() {}
 }
