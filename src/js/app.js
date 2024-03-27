@@ -84,6 +84,7 @@ class CalorieTracker {
     this.#totalCalories += meal.calories;
 
     this.#rendorStats();
+    this.#displayNewMeal(meal);
   }
 
   removeMeal(id) {
@@ -104,6 +105,7 @@ class CalorieTracker {
     this.#totalCalories -= workout.calories;
 
     this.#rendorStats();
+    this.#displayWorkout(workout);
   }
 
   removeWorkout(id) {
@@ -172,6 +174,56 @@ class CalorieTracker {
     }
 
     progressEl.style.width = `${percentage}%`;
+  }
+
+  #displayNewMeal(meal) {
+    const mealItems = document.getElementById("meal-items");
+
+    const mealEl = document.createElement("div");
+    mealEl.classList.add("card");
+    mealEl.classList.add("my-2");
+    mealEl.innerHTML = `
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between">
+        <h4 class="mx-1">${meal.name}</h4>
+        <div
+          class="fs-1 bg-primary text-white text-center rounded-2 px-2 px-sm-5"
+        >
+          ${meal.calories}
+        </div>
+        <button class="delete btn btn-danger btn-sm mx-2">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+    `;
+
+    mealItems.appendChild(mealEl);
+  }
+
+  #displayWorkout(workout) {
+    const workoutItems = document.getElementById("workout-items");
+
+    const workoutEl = document.createElement("div");
+    workoutEl.classList.add("card");
+    workoutEl.classList.add("my-2");
+    workoutEl.innerHTML = `
+    <div class="card-body">
+      <div class="d-flex align-items-center justify-content-between">
+        <h4 class="mx-1">${workout.name}</h4>
+        <div
+          class="fs-1 bg-secondary text-white text-center rounded-2 px-2 px-sm-5"
+        >
+          ${workout.calories}
+        </div>
+        <button class="delete btn btn-danger btn-sm mx-2">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+    </div>
+    `;
+
+    workoutItems.appendChild(workoutEl);
   }
 
   #rendorStats() {
