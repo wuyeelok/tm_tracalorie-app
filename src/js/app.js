@@ -180,8 +180,7 @@ class CalorieTracker {
     const mealItems = document.getElementById("meal-items");
 
     const mealEl = document.createElement("div");
-    mealEl.classList.add("card");
-    mealEl.classList.add("my-2");
+    mealEl.classList.add("card", "my-2");
     mealEl.innerHTML = `
     <div class="card-body">
       <div class="d-flex align-items-center justify-content-between">
@@ -205,8 +204,7 @@ class CalorieTracker {
     const workoutItems = document.getElementById("workout-items");
 
     const workoutEl = document.createElement("div");
-    workoutEl.classList.add("card");
-    workoutEl.classList.add("my-2");
+    workoutEl.classList.add("card", "my-2");
     workoutEl.innerHTML = `
     <div class="card-body">
       <div class="d-flex align-items-center justify-content-between">
