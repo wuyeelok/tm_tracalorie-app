@@ -67,7 +67,7 @@ class CalorieTracker {
 
   constructor() {
     this.#calorieLimit = Storage.getCalorieLimit();
-    this.#totalCalories = 0;
+    this.#totalCalories = Storage.getTotalCalories(0);
     this.#meals = [];
     this.#workouts = [];
 
@@ -82,6 +82,7 @@ class CalorieTracker {
   addMeal(meal) {
     this.#meals.push(meal);
     this.#totalCalories += meal.calories;
+    Storage.setTotalCalories(this.#totalCalories);
 
     this.#displayNewMeal(meal);
     this.#rendorStats();
@@ -92,6 +93,7 @@ class CalorieTracker {
     if (index !== -1) {
       const meal = this.#meals[index];
       this.#totalCalories -= meal.calories;
+      Storage.setTotalCalories(this.#totalCalories);
       this.#meals.splice(index, 1);
 
       const mealEl = document.querySelector(`[data-id="${id}"]`);
@@ -103,6 +105,7 @@ class CalorieTracker {
   addWorkout(workout) {
     this.#workouts.push(workout);
     this.#totalCalories -= workout.calories;
+    Storage.setTotalCalories(this.#totalCalories);
 
     this.#displayNewWorkout(workout);
     this.#rendorStats();
@@ -113,6 +116,7 @@ class CalorieTracker {
     if (index !== -1) {
       const workout = this.#workouts[index];
       this.#totalCalories += workout.calories;
+      Storage.setTotalCalories(this.#totalCalories);
       this.#workouts.splice(index, 1);
 
       const workoutEl = document.querySelector(`[data-id="${id}"]`);
@@ -123,6 +127,7 @@ class CalorieTracker {
 
   resetDay() {
     this.#totalCalories = 0;
+    Storage.setTotalCalories(this.#totalCalories);
     this.#meals = [];
     this.#workouts = [];
     this.#rendorStats();
@@ -309,6 +314,16 @@ class Storage {
 
   static setCalorieLimit(limit) {
     localStorage.setItem("calorieLimit", limit);
+  }
+
+  static getTotalCalories(defaultTotal = 0) {
+    return localStorage.getItem("totalCalories") !== null
+      ? Number(localStorage.getItem("totalCalories"))
+      : defaultTotal;
+  }
+
+  static setTotalCalories(total) {
+    localStorage.setItem("totalCalories", total);
   }
 }
 
