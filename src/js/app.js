@@ -66,8 +66,7 @@ class CalorieTracker {
   #workouts;
 
   constructor() {
-    this.#calorieLimit =
-      Storage.getCalorieLmit() !== null ? Storage.getCalorieLmit() : 2000;
+    this.#calorieLimit = Storage.getCalorieLimit();
     this.#totalCalories = 0;
     this.#meals = [];
     this.#workouts = [];
@@ -302,10 +301,10 @@ const superSize = new Meal("Super Size", 1920);
 tracker.addMeal(superSize); */
 
 class Storage {
-  static getCalorieLmit() {
+  static getCalorieLimit(defaultLimit = 2000) {
     return localStorage.getItem("calorieLimit") !== null
       ? Number(localStorage.getItem("calorieLimit"))
-      : null;
+      : defaultLimit;
   }
 
   static setCalorieLimit(limit) {
