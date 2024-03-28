@@ -185,13 +185,10 @@ class CalorieTracker {
 
   resetDay() {
     this.#totalCalories = 0;
-    Storage.setTotalCalories(this.#totalCalories);
-
     this.#meals = [];
-    Storage.saveMeals(this.#meals);
-
     this.#workouts = [];
-    Storage.saveWorkouts(this.#workouts);
+
+    Storage.clearAll();
 
     this.#rendorStats();
   }
@@ -388,6 +385,12 @@ class Storage {
       Workout.valueOf(workoutObj)
     );
     return workouts;
+  }
+
+  static clearAll() {
+    localStorage.removeItem("totalCalories");
+    localStorage.removeItem("meals");
+    localStorage.removeItem("workouts");
   }
 }
 
