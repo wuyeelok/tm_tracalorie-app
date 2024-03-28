@@ -42,13 +42,13 @@ class Meal {
     });
   }
  */
-  static convert(mealObj) {
+  static valueOf(mealObj) {
     const meal = new Meal(mealObj.name, mealObj.calories);
     meal.id = mealObj.id;
     return meal;
   }
 
-  getNormalObj() {
+  recordValue() {
     const meal = {
       id: this.#id,
       name: this.#name,
@@ -69,7 +69,7 @@ class Workout {
     this.#calories = calories;
   }
 
-  static convert(workoutObj) {
+  static valueOf(workoutObj) {
     const workout = new Workout(workoutObj.name, workoutObj.calories);
     workout.id = workoutObj.id;
     return workout;
@@ -95,7 +95,7 @@ class Workout {
     return `${Math.random().toString(16).slice(2)}${new Date().getTime()}`;
   }
 
-  getNormalObj() {
+  recordValue() {
     const workout = {
       id: this.#id,
       name: this.#name,
@@ -355,7 +355,7 @@ class Storage {
   }
 
   static saveMeals(meals) {
-    const mealObjArr = meals.map((meal) => meal.getNormalObj());
+    const mealObjArr = meals.map((meal) => meal.recordValue());
     localStorage.setItem("meals", JSON.stringify(mealObjArr));
   }
 
@@ -365,12 +365,12 @@ class Storage {
         ? JSON.parse(localStorage.getItem("meals"))
         : [];
 
-    const meals = mealObjArr.map((mealObj) => Meal.convert(mealObj));
+    const meals = mealObjArr.map((mealObj) => Meal.valueOf(mealObj));
     return meals;
   }
 
   static saveWorkouts(workouts) {
-    const workoutObjArr = workouts.map((workout) => workout.getNormalObj());
+    const workoutObjArr = workouts.map((workout) => workout.recordValue());
     localStorage.setItem("workouts", JSON.stringify(workoutObjArr));
   }
 
@@ -381,7 +381,7 @@ class Storage {
         : [];
 
     const workouts = workoutObjArr.map((workoutObj) =>
-      Workout.convert(workoutObj)
+      Workout.valueOf(workoutObj)
     );
     return workouts;
   }
