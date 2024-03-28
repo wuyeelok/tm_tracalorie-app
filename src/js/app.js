@@ -125,6 +125,10 @@ class CalorieTracker {
     this.#displayCaloriesProgress();
   }
 
+  get calorieLimit() {
+    return this.#calorieLimit;
+  }
+
   addMeal(meal) {
     this.#meals.push(meal);
     Storage.saveMeals(this.#meals);
@@ -434,6 +438,15 @@ class App {
     document
       .getElementById("limit-form")
       .addEventListener("submit", this.#setLimit.bind(this));
+
+    const limitModalEl = document.getElementById("limit-modal");
+    limitModalEl.addEventListener("show.bs.modal", (event) => {
+      document.getElementById("limit").value = this.#tracker.calorieLimit;
+    });
+
+    limitModalEl.addEventListener("hidden.bs.modal", (event) => {
+      document.getElementById("limit").value = "";
+    });
   }
 
   #newItem(e, type) {
