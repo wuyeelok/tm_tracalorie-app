@@ -125,6 +125,10 @@ class CalorieTracker {
     this.#displayCaloriesProgress();
   }
 
+  get calorieLimit() {
+    return this.#calorieLimit;
+  }
+
   addMeal(meal) {
     this.#meals.push(meal);
     Storage.saveMeals(this.#meals);
@@ -181,13 +185,10 @@ class CalorieTracker {
 
   resetDay() {
     this.#totalCalories = 0;
-    Storage.setTotalCalories(this.#totalCalories);
-
     this.#meals = [];
-    Storage.saveMeals(this.#meals);
-
     this.#workouts = [];
-    Storage.saveWorkouts(this.#workouts);
+
+    Storage.clearAll();
 
     this.#rendorStats();
   }
@@ -385,6 +386,12 @@ class Storage {
     );
     return workouts;
   }
+
+  static clearAll() {
+    localStorage.removeItem("totalCalories");
+    localStorage.removeItem("meals");
+    localStorage.removeItem("workouts");
+  }
 }
 
 class App {
@@ -434,6 +441,15 @@ class App {
     document
       .getElementById("limit-form")
       .addEventListener("submit", this.#setLimit.bind(this));
+
+    const limitModalEl = document.getElementById("limit-modal");
+    limitModalEl.addEventListener("show.bs.modal", (event) => {
+      document.getElementById("limit").value = this.#tracker.calorieLimit;
+    });
+
+    limitModalEl.addEventListener("hidden.bs.modal", (event) => {
+      document.getElementById("limit").value = "";
+    });
   }
 
   #newItem(e, type) {
