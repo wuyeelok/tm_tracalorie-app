@@ -344,7 +344,11 @@ class App {
 
   constructor() {
     this.#tracker = new CalorieTracker();
+    this.#loadEventListeners();
+    this.#tracker.loadItems();
+  }
 
+  #loadEventListeners() {
     document.getElementById("meal-form").addEventListener("submit", (event) => {
       this.#newItem(event, "meal");
     });
@@ -382,8 +386,6 @@ class App {
     document
       .getElementById("limit-form")
       .addEventListener("submit", this.#setLimit.bind(this));
-
-    this.#tracker.loadItems();
   }
 
   #newItem(e, type) {
