@@ -1,10 +1,10 @@
-# Beyond CSS Website Starter Template
+# Tracalorie App
 
-This static website template is based on **Kelvin POWELL** [Beyond CSS course](https://www.beyondcss.dev/).
+This app is used for tracking daily meals, workouts, Calorie limit.
 
 _Table of Contents_
 
-- [Beyond CSS Website Starter Template](#beyond-css-website-starter-template)
+- [Tracalorie App](#tracalorie-app)
   - [Prerequisite](#prerequisite)
   - [How to Use: For Local Development](#how-to-use-for-local-development)
   - [How to Use: For Production Deployment In GitHub Pages](#how-to-use-for-production-deployment-in-github-pages)
