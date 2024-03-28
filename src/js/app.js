@@ -1,8 +1,6 @@
 // Import all of Bootstrap's JS
 import * as bootstrap from "bootstrap";
 
-console.log("Tracalorie!");
-
 class Meal {
   #id;
   #name;
@@ -34,14 +32,6 @@ class Meal {
     return `${Math.random().toString(16).slice(2)}${new Date().getTime()}`;
   }
 
-  /* stringify() {
-    return JSON.stringify({
-      id: this.#id,
-      name: this.#name,
-      calories: this.#calories,
-    });
-  }
- */
   static valueOf(mealObj) {
     const meal = new Meal(mealObj.name, mealObj.calories);
     meal.id = mealObj.id;
@@ -322,17 +312,6 @@ class CalorieTracker {
     this.#displayCaloriesProgress();
   }
 }
-
-/* const tracker = new CalorieTracker();
-
-const run = new Workout("Morning run", 320);
-tracker.addWorkout(run);
-
-const breakfast = new Meal("Breakfast", 400);
-tracker.addMeal(breakfast);
-
-const superSize = new Meal("Super Size", 1920);
-tracker.addMeal(superSize); */
 
 class Storage {
   static getCalorieLimit(defaultLimit = 2000) {
