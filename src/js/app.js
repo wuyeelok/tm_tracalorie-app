@@ -123,7 +123,9 @@ class CalorieTracker {
       const meal = this.#meals[index];
       this.#totalCalories -= meal.calories;
       Storage.setTotalCalories(this.#totalCalories);
+
       this.#meals.splice(index, 1);
+      Storage.saveMeals(this.#meals);
 
       const mealEl = document.querySelector(`[data-id="${id}"]`);
       mealEl.remove();
@@ -157,7 +159,10 @@ class CalorieTracker {
   resetDay() {
     this.#totalCalories = 0;
     Storage.setTotalCalories(this.#totalCalories);
+
     this.#meals = [];
+    Storage.saveMeals(this.#meals);
+
     this.#workouts = [];
     this.#rendorStats();
   }
